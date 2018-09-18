@@ -1,0 +1,91 @@
+% !Rnw weave = knitr
+\documentclass{beamer}
+\usepackage{url}
+
+\title{R + \LaTeX = knitr}
+\author{Cara Feldscher}
+\date{September 24th}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+%
+
+\begin{frame}[fragile] % If you include a verbatim environment, you need the fragile option because https://pbelmans.ncag.info/blog/2011/02/20/why-latex-beamer-needs-fragile-when-using-verbatim/
+  What is \LaTeX
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  Why I care
+  
+  \begin{itemize}
+    \item Semanticist secret handshake
+    \item Great control
+    \item I do want to get back to working with data, but I refuse to go back to powerpoint.
+  \end{itemize}
+\end{frame}
+
+%\
+
+\begin{frame}[fragile]
+  Why you care?
+  
+  \begin{itemize}
+    \item Maybe you already use R and latex?
+    \item Reproducability
+    \item No really, where did I save that graph I wanted...
+  \end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  What knitr does
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  How it differs from sweave?
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  Knitr set up:
+  
+  \begin{itemize}
+    \item Install package (link YiHui's website)
+    \item Global settings
+    \item Latex skeleton
+    \item Code chunks
+  \end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  Knitr MWE
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  Tips
+  \begin{itemize}
+    \item \url{https://yihui.name/knitr/}
+    \item This is slow. Make your main R doc separately and do all your experiments there.
+    \item Stuff isn't always saved in the environment either! This is the show page not the manip page.
+    \item No spellcheck or autocompelte if you're used to working in a different tex editor.
+  \end{itemize}
+\end{frame}
+
+
+
+
+\end{document}
