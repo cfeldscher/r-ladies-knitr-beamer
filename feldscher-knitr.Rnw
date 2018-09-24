@@ -8,10 +8,12 @@
 \usepackage[]{hyperref} % Links, pretty and functional
 \usepackage{listings} % Prettier code blocks
 \usepackage{graphicx} % Include graphics
+\usepackage{multicol} % Columns
 \usepackage{tikz-qtree,tikz-qtree-compat} % Syntax trees
 \tikzset{every tree node/.style={align=center,anchor=north}}
 \usepackage{amsmath,amssymb,stmaryrd} % Mathy symbols for semantics
 \usepackage{gb4e} % Glossing. MUST BE LAST PACKAGE LOADED.
+\resetcounteronoverlays{exx} % Fixes weird beamer exe numbering issue
 
 %%%%%%%%%%%%
 % Settings %
@@ -61,7 +63,7 @@
 % Titlepage info %
 %%%%%%%%%%%%%%%%%%
 
-\title{R + \LaTeX = knitr}
+\title{R + \LaTeX\ = knitr}
 \author[Cara Feldscher]{Cara Feldscher\\\href{mailto:feldsch3@msu.edu}{feldsch3@msu.edu}}
 \institute[Michigan State University]{Michigan State University}
 \date{ R-Ladies \\ \today}
@@ -90,7 +92,7 @@
 \section{Why I care about \LaTeX}
 
 \begin{frame}[fragile]
-  \frametitle{Secret handshakes}
+  \frametitle{Subfield secret handshakes}
     
     \begin{exe}
       \ex ~ \vspace{-1em}
@@ -114,49 +116,15 @@
 %
 
 \begin{frame}[fragile]
-  \frametitle{Control, flexibility}
-  
-  Write your own commands.\pause
-  
-  \begin{lstlisting}[language=TeX]
-    % The standard way to note a denotation
-    \newcommand{\denotation}[1]{\ensuremath{\llbracket \text{#1} \rrbracket}} \end{lstlisting}
-  % Ended on same line instead of next because it was giving me an extra line in the listing otherwise...
-  \pause
-  
-  \begin{lstlisting}[language=TeX]
-    % Easily changeable!!!
-    \newcommand{\denotation}[1]{I hearby declare that #1 means}   \end{lstlisting}
-  % Ended on same line instead of next because it was giving me an extra line in the listing otherwise...
-  \pause
-  
-  
-  \newcommand{\denotation}[1]{\ensuremath{\llbracket \text{#1} \rrbracket = }}
-  \begin{exe}
-    \ex $\denotation{cat} ...$
-  \end{exe}
-  
-  \renewcommand{\denotation}[1]{\text{I hearby declare that #1 means}}
-  \begin{exe}
-    \ex $\denotation{cat} ...$
-  \end{exe}
-  
-\end{frame}
-
-%
-
-\begin{frame}[fragile]
-  \frametitle{Control, flexibility}
+  \frametitle{Control, flexibility, convenience}
     
-    An abstract requirement I had once...\pause
+    There's a package for that.\pause
     
     \begin{lstlisting}[language=TeX]
-      \documentclass[a4paper,10pt]{article}
-      \usepackage[top=4.5cm,right=4cm,bottom=6.5cm,left=5cm % Options
-      ]{geometry} 
-      \usepackage{times} % TNR, deprecated?
-      \usepackage{setspacing}
-      \singlespacing \end{lstlisting}
+      \usepackage{hyperref} % Links, pretty and functional
+      \usepackage{listings} % Prettier code blocks
+      \usepackage{tikz-qtree,tikz-qtree-compat} % Syntax trees
+      \usepackage{amsmath,amssymb,stmaryrd} % Mathy symbols for semantics \end{lstlisting}
     % Ended on same line instead of next because it was giving me an extra line in the listing otherwise...
 
   
@@ -165,13 +133,35 @@
 %
 
 \begin{frame}[fragile]
-  \frametitle{Convenience}
+  \frametitle{Control, flexibility, convenience}
+  
+  Write your own commands.\pause
+  
+  \begin{lstlisting}[language=TeX]
+    % The standard way to note a denotation
+    \newcommand{\denotation}[1]{\ensuremath{\llbracket \text{#1} \rrbracket}} 
+    
+    \denotation{cat} \end{lstlisting}
+  % Ended on same line instead of next because it was giving me an extra line in the listing otherwise...
+  
+  
+  \newcommand{\denotation}[1]{\ensuremath{\llbracket \text{#1} \rrbracket = }}
+  \begin{exe}
+    \ex $\denotation{cat} ...$
+  \end{exe}
+  
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+  \frametitle{Control, flexibility, convenience}
   
   Automated:\pause
   \begin{itemize}
-    \item Bibliography and citations\footnote{Someone brought up bibtex last week and I agree that it's great!}
-    \item Labeling and referencing (figures, sections, etc.)
-    \item Commands (as per previous slide)
+    \item Bibliography and citations
+    \item Labeling and referencing (figures, examples, sections, etc.)
+    \item Commands 
   \end{itemize}
   
 \end{frame}
@@ -184,11 +174,6 @@
 
 \begin{frame}[fragile]
   \frametitle{Minimal Working Example 1}
-    
-    \begin{itemize}
-      \item \verb echo = TRUE
-      \item \verb eval = TRUE
-    \end{itemize}
   
         <<data1, size = "tiny", echo = TRUE, eval = TRUE, fig.height=3>>=
         library(ggplot2)
@@ -198,6 +183,11 @@
         geom_point()+
         geom_smooth(method = "lm")
         @
+    
+    \begin{itemize}
+      \item \verb echo = TRUE
+      \item \verb eval = TRUE
+    \end{itemize}
         
 \end{frame}
 
@@ -205,11 +195,6 @@
 
 \begin{frame}[fragile]
   \frametitle{Minimal Working Example 2}
-    
-    \begin{itemize}
-      \item \verb echo = FALSE
-      \item \verb eval = TRUE
-    \end{itemize}
   
         <<data2, size = "tiny", echo = FALSE, eval = TRUE, fig.height=3>>=
         library(ggplot2)
@@ -219,6 +204,11 @@
         geom_point()+
         geom_smooth(method = "lm")
         @
+    
+    \begin{itemize}
+      \item \verb echo = FALSE
+      \item \verb eval = TRUE
+    \end{itemize}
         
 \end{frame}
 
@@ -226,11 +216,6 @@
 
 \begin{frame}[fragile]
   \frametitle{Minimal Working Example 3}
-    
-    \begin{itemize}
-      \item \verb echo = TRUE
-      \item \verb eval = FALSE
-    \end{itemize}
   
         <<data3, size = "tiny", echo = TRUE, eval = FALSE, fig.height=3>>=
         library(ggplot2)
@@ -240,6 +225,11 @@
         geom_point()+
         geom_smooth(method = "lm")
         @
+    
+    \begin{itemize}
+      \item \verb echo = TRUE
+      \item \verb eval = FALSE
+    \end{itemize}
         
 \end{frame}
 
@@ -266,7 +256,7 @@
     \item Forgetting to update your graph after you add data.
     \item Grabbing the wrong graph.
     \item Saving over the graph you want.
-    \item Copy pasting the wrong code into your paper.
+    \item Copy pasting the wrong graph / code into your paper.
   \end{itemize}
 \end{frame}
 
@@ -282,9 +272,9 @@
 %
 
 \begin{frame}[fragile]
-  \frametitle{\LaTeX is cool}
+  \frametitle{\LaTeX\ is cool}
   
-  \LaTeX is cool, for all the aforementioned reasons.\pause
+  \LaTeX\ is cool, for all the aforementioned reasons.\pause
   
   ...Or you can use Markdown.
   
@@ -292,18 +282,14 @@
 
 %
 
-\section{Final notes}
+\section{Conclusion}
 
 %
 
 \begin{frame}[fragile]
-  \frametitle{Final notes}
+  \frametitle{Conclusion}
   
-  \begin{itemize}
-    \item Thanks Yihui! (\href{https://yihui.name/knitr/}{\color{violet}website}, \href{https://github.com/yihui/knitr}{\color{violet}github})
-    \item Compiles slowly!
-    \item No tex spellcheck or autocomplete.
-  \end{itemize}
+  Thanks Yihui! (\href{https://yihui.name/knitr/}{\color{violet}website}, \href{https://github.com/yihui/knitr}{\color{violet}github})
   
 \end{frame}
 
@@ -314,7 +300,7 @@
   
   If you want the slides or code, it's available through R-Ladies, or at \href{https://github.com/cfeldscher}{\color{violet}https://github.com/cfeldscher}.
   
-  Set up instructions follow in appendix slides.
+  Set up instructions follow in an appendix slide.
   
 \end{frame}
 
@@ -325,15 +311,45 @@
 %
 
 \begin{frame}
-  \frametitle{Set-up}
-  Knitr set up:
+  \frametitle{Knitr set-up}
   
+  \begin{multicols}{2}
   \begin{enumerate}
     \item Install package \texttt{knitr}
-    \item Global settings \includegraphics[height=2in]{knitr-settings-crop.png}
-    \item Create a wholly \LaTeX (or Markdown) document in RStudio.
-    \item Where you want R code
+    \item Change default from sweave to knitr in the global settings:
+    \item Create a wholly \LaTeX\ (or Markdown) document in RStudio.
+    \item Where you want R code, insert a code block.
+    \item If you're iffy on the above two steps, look at the code for this doc.
   \end{enumerate}
+  
+  \columnbreak
+  
+  \includegraphics[height=2in]{knitr-settings-crop.png}
+  \end{multicols}
+  
+\end{frame}
+
+%
+
+\begin{frame}
+  \frametitle{\LaTeX\ resources}
+  
+  Installing: \href{https://www.latex-project.org/get/}{\color{violet}https://www.latex-project.org/get/}
+  \vspace{2em}
+  
+  Other potential resources:
+  \begin{itemize}
+    \item \href{https://www.sharelatex.com/blog/latex-guides/beginners-tutorial.html}{\color{violet}https://www.sharelatex.com/blog/latex-guides/beginners-tutorial.html}\footnote{I haven't actually checked these out, but I've found ShareLatex's overviews of packages and such very clear and helpful.}
+    \item \href{https://tex.stackexchange.com/}{\color{violet}https://tex.stackexchange.com/}
+  \end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}
+  \frametitle{Workflow suggestions}
+  
+  Knitr compiles pretty slowly. This should be your final document, not your testing and exploring data document. Do all that in a different R file, then put the important stuff in a knitr file. Additionally, RStudio doesn't have the \LaTeX\ spellcheck or autocomplete that your usual \TeX\ editor might have, so you should either proofread carefully, or check it in a tex editor.
   
 \end{frame}
 
